@@ -14,7 +14,8 @@ export type MateriType = {
   id: number;
   title: string;
   description: string;
-  user: { id: true; name: true };
+  user: { id: number; name: string };
+  product: { id: number; name: string };
   createdAt?: Date;
   updatedAt?: Date;
   attachments?: AttachmentType[];

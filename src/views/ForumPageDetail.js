@@ -107,10 +107,8 @@ export default function ForumPageDetail() {
                               {ReactHtmlParser(data.description)}
                             </div>
                             <label className='text-sm text-slate-500'>
-                              By <strong>{detail?.user.name}</strong> at{' '}
-                              {moment(detail?.createdAt).format(
-                                'DD/MM/YY HH:mm'
-                              )}
+                              By <strong>{data?.user.name}</strong> at{' '}
+                              {moment(data?.createdAt).format('DD/MM/YY HH:mm')}
                             </label>
                           </div>
                         </div>

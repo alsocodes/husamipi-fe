@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPopper } from '@popperjs/core';
+import { useAppSelector } from '../../app/hooks.ts';
+import { selectAuth } from '../../slices/AuthSlice/index.ts';
 
 const PagesDropdown = () => {
   // dropdown props
@@ -16,6 +18,8 @@ const PagesDropdown = () => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
+  const { userData } = useAppSelector(selectAuth);
   return (
     <>
       <a
@@ -36,22 +40,26 @@ const PagesDropdown = () => {
           'bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48'
         }
       >
-        <Link
-          to='/data/karyawan'
-          className={
-            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
-          }
-        >
-          Karyawan
-        </Link>
-        <Link
-          to='/data/role'
-          className={
-            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
-          }
-        >
-          User Role
-        </Link>
+        {userData?.role?.accesses?.includes('user_read') && (
+          <Link
+            to='/data/karyawan'
+            className={
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
+            }
+          >
+            Karyawan
+          </Link>
+        )}
+        {userData?.role?.accesses?.includes('role_read') && (
+          <Link
+            to='/data/role'
+            className={
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
+            }
+          >
+            User Role
+          </Link>
+        )}
         {/* <Link
           to='/data/profil-perusahaan'
           className={
@@ -60,6 +68,7 @@ const PagesDropdown = () => {
         >
           Profil Perusahaan
         </Link> */}
+
         <Link
           to='/data/materi'
           className={
@@ -86,14 +95,16 @@ const PagesDropdown = () => {
           Produk
         </Link>
 
-        <Link
-          to='/data/sale'
-          className={
-            'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
-          }
-        >
-          Sale
-        </Link>
+        {userData?.role?.accesses?.includes('user_read') && (
+          <Link
+            to='/data/sale'
+            className={
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700'
+            }
+          >
+            Sale
+          </Link>
+        )}
       </div>
     </>
   );

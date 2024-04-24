@@ -19,7 +19,7 @@ import {
   selectProduct,
 } from '../slices/ProductSlice/index.ts';
 import { selectAuth } from '../slices/AuthSlice/index.ts';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Product() {
   const [params, setParams] = useState({
@@ -48,11 +48,25 @@ export default function Product() {
     },
 
     { field: 'name', label: 'Nama', sort: true },
+    ...(accesses?.includes('product_price')
+      ? [
+          {
+            field: 'price',
+            label: 'Harga',
+            sort: true,
+            func: ({ value }) => Number(value).toLocaleString('id-ID'),
+          },
+        ]
+      : []),
     {
-      field: 'price',
-      label: 'Harga',
-      sort: true,
-      func: ({ value }) => Number(value).toLocaleString('id-ID'),
+      field: 'materis',
+      label: 'Materi',
+      func: ({ value }) => (
+        <Link
+          className='underline text-blue-700'
+          to={'/materi'}
+        >{`${value?.length} materi`}</Link>
+      ),
     },
     {
       field: '_',
@@ -75,7 +89,7 @@ export default function Product() {
             className='bg-orange-500 items-center justify-center gap-2.5 rounded-md bg-meta-6 disabled:bg-slate-200 disabled:cursor-not-allowed px-2 py-2 w-10 inline-flex text-center font-medium text-white hover:bg-opacity-90'
             onClick={() => {
               dispatch(SetDetail(row));
-              navigate(`/data/product/${row.id}`);
+              navigate(`/data/produk/${row.id}`);
             }}
           >
             <FontAwesomeIcon icon={faPencil} size='xs' />

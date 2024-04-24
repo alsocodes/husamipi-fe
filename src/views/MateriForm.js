@@ -13,9 +13,10 @@ import {
   GetOneMateri,
   UploadAttachments,
 } from '../slices/MateriSlice/index.ts';
-import { toPascalCase } from '../utils/helper.ts';
+// import { toPascalCase } from '../utils/helper.ts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { GetOptProduct, selectProduct } from '../slices/ProductSlice/index.ts';
 
 function MateriForm() {
   const location = useLocation();
@@ -38,19 +39,23 @@ function MateriForm() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(NullFormResult());
+    dispatch(GetOptProduct(''));
   }, [dispatch]);
 
   const onSubmit = (data) => {
     const pl = {
       ...data,
+      ...(data.productId ? { productId: Number(data.productId) } : {}),
     };
 
+    console.log(data, pl);
     // return console.log(data);
     if (!data.id) dispatch(CreateMateri(pl));
     else dispatch(UpdateMateri(pl));
   };
 
   const { detail, formResult } = useAppSelector(selectMateri);
+  const { opt: productOpt } = useAppSelector(selectProduct);
 
   useEffect(() => {
     if (!detail && lastPath !== 'create' && lastPath !== '')
@@ -62,6 +67,7 @@ function MateriForm() {
     if (detail) setValue('id', detail.id);
     setValue('title', detail?.title || '');
     setValue('description', detail?.description || '');
+    setValue('productId', detail?.product?.id || '');
     setAttachments(detail?.attachments || []);
   }, [setValue, detail]);
 
@@ -99,6 +105,19 @@ function MateriForm() {
             <div className='w-full flex flex-col'>
               <div className='w-3/2 max-w-full'>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className='my-4'>
+                    <TextInput
+                      layout='horizontal'
+                      name='productId'
+                      type='select'
+                      label='Produk'
+                      placeholder='Produk'
+                      register={register('productId')}
+                      errors={errors}
+                      defaultValue=''
+                      options={productOpt || []}
+                    />
+                  </div>
                   <div className='my-4'>
                     <TextInput
                       layout='horizontal'

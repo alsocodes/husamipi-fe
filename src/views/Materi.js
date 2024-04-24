@@ -49,6 +49,7 @@ export default function Materi() {
     },
 
     { field: 'title', label: 'Nama Materi', sort: true },
+    { field: 'product.name', label: 'Produk', sort: true },
     {
       field: '_',
       label: 'Aksi',

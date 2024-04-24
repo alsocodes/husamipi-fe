@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
 
@@ -8,9 +8,20 @@ import Calendar from 'react-calendar';
 import Navbar from '../components/Navbars/AuthNavbar.js';
 // import Footer from './components/Footers/Footer.js';
 import Footer from '../components/Footers/Footer.js';
+import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
+import { GetForum, selectForum } from '../slices/ForumSlice/index.ts';
+import { GetMateri, selectMateri } from '../slices/MateriSlice/index.ts';
+import moment from 'moment';
 
 export default function Dashboard() {
   const [calendar, setCalendar] = useState(new Date());
+  const dispatch = useAppDispatch();
+  const { data: dataForum } = useAppSelector(selectForum);
+  const { data: dataMateri } = useAppSelector(selectMateri);
+  useEffect(() => {
+    dispatch(GetForum());
+    dispatch(GetMateri());
+  }, [dispatch]);
   return (
     <div className='w-full h-screen overflow-y-auto'>
       <Navbar transparent />
@@ -139,46 +150,31 @@ export default function Dashboard() {
                     Materi Terbaru
                   </h2>
                   <ul className=''>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Pengenalan perusahaan dan aturan PT Best Energy System
-                        2024
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Petunjuk Teknis dan Pedoman Keselamatan dan Kesehatan
-                        Kerja (K3)
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Tata cara input data kepegawaian secara mandiri oleh
-                        masing-masing karyawan
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Panduan teknis dan informasi terbaru tentang Pajak
-                        Penghasilan PPh21 tahun 2024
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
+                    {dataMateri?.rows?.map(
+                      ({ user, title, createdAt, id, product }, index) => (
+                        <li
+                          className='py-2 border-b border-dotted border-slate-300'
+                          key={index}
+                        >
+                          <Link to={`/materi/${id}`}>
+                            <h3 className='font-semibold text-slate-600'>
+                              {title}
+                            </h3>
+                          </Link>
+                          {product && (
+                            <Link to={`/data/produk/${product.id}`}>
+                              <h3 className='font-semibold text-lg text-slate-600 hover:underline'>
+                                Produk : {product.name}
+                              </h3>
+                            </Link>
+                          )}
+                          <p className='text-sm text-slate-500'>
+                            {moment(createdAt).format('DD/MM/YY')} | Materi by{' '}
+                            <span className='font-semibold'>{user.name}</span>
+                          </p>
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
                 <div className='mb-10'>
@@ -186,46 +182,19 @@ export default function Dashboard() {
                     Forum Terbaru
                   </h2>
                   <ul className=''>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Pengenalan perusahaan dan aturan PT Best Energy System
-                        2024
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Petunjuk Teknis dan Pedoman Keselamatan dan Kesehatan
-                        Kerja (K3)
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Tata cara input data kepegawaian secara mandiri oleh
-                        masing-masing karyawan
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
-                    <li className='py-2 border-b border-dotted border-slate-300'>
-                      <h3 className='font-semibold text-slate-600'>
-                        Panduan teknis dan informasi terbaru tentang Pajak
-                        Penghasilan PPh21 tahun 2024
-                      </h3>
-                      <p className='text-sm text-slate-500'>
-                        16 April 2024 | Materi by{' '}
-                        <span className='font-semibold'>Superadmin</span>
-                      </p>
-                    </li>
+                    {dataForum?.rows?.map(({ id, title, user, createdAt }) => (
+                      <li className='py-2 border-b border-dotted border-slate-300'>
+                        <Link to={`/forum/${id}`}>
+                          <h3 className='font-semibold text-slate-600'>
+                            {title}
+                          </h3>
+                        </Link>
+                        <p className='text-sm text-slate-500'>
+                          {moment(createdAt).format('DD/MM/YY')} | Forum by{' '}
+                          <span className='font-semibold'>{user.name}</span>
+                        </p>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

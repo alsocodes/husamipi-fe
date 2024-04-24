@@ -8,6 +8,7 @@ export type ProductType = {
   id: number;
   name: string;
   price: string;
+  materis: { id: true; title: true; user: { id: true; name: true } }[];
   createdAt?: Date;
   updatedAt?: Date;
 };

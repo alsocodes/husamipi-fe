@@ -52,30 +52,39 @@ export default function MateriPage() {
               Materi Diskusi
             </h3>
             <ul className='flex flex-col gap-4'>
-              {data?.rows.map(({ title, user, description, createdAt, id }) => {
-                return (
-                  <li className='border p-4 shadow-sm rounded-md'>
-                    <h3 className='font-semibold text-xl text-slate-600'>
-                      {title}
-                    </h3>
-                    <label className='text-sm text-slate-500'>
-                      Posted By <strong>{user.name}</strong> at{' '}
-                      {moment(createdAt).format('DD/MM/YY HH:mm')}
-                    </label>
-                    <div className='truncate overflow-ellipsis line-clamp-2 text-opacity-90 p-2 rounded-md bg-slate-100 mt-2'>
-                      {ReactHtmlParser(description)}
-                    </div>
-                    <div className='py-4'>
-                      <Link
-                        to={`/materi/${id}`}
-                        className='border py-2 px-6 bg-lightBlue-600 text-white rounded-md text-sm hover:bg-blueGray-900'
-                      >
-                        Lihat Materi
-                      </Link>
-                    </div>
-                  </li>
-                );
-              })}
+              {data?.rows.map(
+                ({ title, user, description, createdAt, id, product }) => {
+                  return (
+                    <li className='border p-4 shadow-sm rounded-md'>
+                      <h3 className='font-semibold text-xl text-slate-600'>
+                        {title}
+                      </h3>
+                      {product && (
+                        <Link to={`/data/produk/${product.id}`}>
+                          <h3 className='font-semibold text-lg text-slate-600 hover:underline'>
+                            Produk : {product.name}
+                          </h3>
+                        </Link>
+                      )}
+                      <label className='text-sm text-slate-500'>
+                        Posted By <strong>{user.name}</strong> at{' '}
+                        {moment(createdAt).format('DD/MM/YY HH:mm')}
+                      </label>
+                      <div className='truncate overflow-ellipsis line-clamp-2 text-opacity-90 p-2 rounded-md bg-slate-100 mt-2'>
+                        {ReactHtmlParser(description)}
+                      </div>
+                      <div className='py-4'>
+                        <Link
+                          to={`/materi/${id}`}
+                          className='border py-2 px-6 bg-lightBlue-600 text-white rounded-md text-sm hover:bg-blueGray-900'
+                        >
+                          Lihat Materi
+                        </Link>
+                      </div>
+                    </li>
+                  );
+                }
+              )}
             </ul>
           </div>
         </section>

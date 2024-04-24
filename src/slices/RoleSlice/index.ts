@@ -37,10 +37,17 @@ export enum Access {
   elearning_update = 'elearning_update',
   elearning_delete = 'elearning_delete',
 
-  products_create = 'product_create',
+  product_create = 'product_create',
   product_read = 'product_read',
   product_update = 'product_update',
   product_delete = 'product_delete',
+  product_price = 'product_price',
+
+  sale_create = 'sale_create',
+  sale_read = 'sale_read',
+  sale_update = 'sale_update',
+  sale_delete = 'sale_delete',
+  sale_price = 'sale_price',
 }
 
 export type RoleType = {

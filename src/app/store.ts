@@ -10,6 +10,8 @@ import role from '../slices/RoleSlice/index.ts';
 import user from '../slices/UserSlice/index.ts';
 import materi from '../slices/MateriSlice/index.ts';
 import forum from '../slices/ForumSlice/index.ts';
+import product from '../slices/ProductSlice/index.ts';
+import sale from '../slices/SaleSlice/index.ts';
 
 import {
   persistStore,
@@ -36,6 +38,8 @@ const reduers = combineReducers({
   user,
   materi,
   forum,
+  product,
+  sale,
 });
 
 const persistedReducer = persistReducer(persistConfig, reduers);

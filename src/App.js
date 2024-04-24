@@ -29,6 +29,12 @@ import Forum from './views/Forum.js';
 import ForumForm from './views/ForumForm.js';
 import ForumPage from './views/ForumPage.js';
 import ForumPageDetail from './views/ForumPageDetail.js';
+import MateriPage from './views/MateriPage.js';
+import MateriPageDetail from './views/MateriPageDetail.js';
+import Product from './views/Product.js';
+import ProductForm from './views/ProductForm.js';
+import Sale from './views/Sale.js';
+import SaleForm from './views/SaleForm.js';
 
 function App() {
   const location = useLocation();
@@ -119,11 +125,19 @@ function App() {
             <Route exact path='/data/role/:path' element={<RoleForm />} />
             <Route exact path='/data/materi' element={<Materi />} />
             <Route exact path='/data/materi/:path' element={<MateriForm />} />
+
+            <Route exact path='/data/produk' element={<Product />} />
+            <Route exact path='/data/produk/:path' element={<ProductForm />} />
+
+            <Route exact path='/data/sale' element={<Sale />} />
+            <Route exact path='/data/sale/:path' element={<SaleForm />} />
+
             <Route exact path='/data/forum' element={<Forum />} />
             <Route exact path='/data/forum/:path' element={<ForumForm />} />
             <Route exact path='/forum' element={<ForumPage />} />
-            <Route exact path='/materi' element={<ForumPage />} />
             <Route exact path='/forum/:path' element={<ForumPageDetail />} />
+            <Route exact path='/materi' element={<MateriPage />} />
+            <Route exact path='/materi/:path' element={<MateriPageDetail />} />
             <Route path='*' element={<Navigate replace to={'/dashboard'} />} />
           </>
         )}

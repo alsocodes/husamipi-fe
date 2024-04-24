@@ -41,7 +41,7 @@ function RoleForm() {
       accesses: data.accesses.reduce((a, b) => {
         const checks = b.items
           .filter(({ checked }) => checked === true, [])
-          ?.map(({ value }) => `${b.group}_${value}`, []);
+          ?.map(({ value }) => `${value}`, []);
         return [...a, ...checks];
       }, []),
     };
@@ -71,6 +71,7 @@ function RoleForm() {
     accesses?.forEach(({ group, items }, i) => {
       setValue(`accesses.${i}.group`, group);
       items.forEach(({ label, value }, x) => {
+        console.log(value, detail?.accesses.includes(value), detail?.accesses);
         setValue(`accesses.${i}.items.${x}.value`, value);
         setValue(
           `accesses.${i}.items.${x}.checked`,
@@ -90,6 +91,10 @@ function RoleForm() {
       dispatch(NullFormResult());
     }
   }, [formResult]);
+
+  useEffect(() => {
+    console.log(watchAccesses);
+  }, [watchAccesses]);
   return (
     <div className='w-full h-screen overflow-y-auto'>
       <Navbar transparent />
@@ -144,7 +149,13 @@ function RoleForm() {
                                       `accesses.${i}.items.${x}.checked`
                                     )}
                                     type='checkbox'
+                                    // defaultChecked={watch(
+                                    //   `accesses.${i}.items.${x}.checked`
+                                    // )}
                                     className='toggle toggle-xs toggle-primary'
+                                    onChange={() => {
+                                      console.log('ok');
+                                    }}
                                   />
                                   <span className='label-text'>
                                     {toPascalCase(item.label)}

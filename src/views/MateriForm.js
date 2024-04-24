@@ -205,6 +205,7 @@ function MateriForm() {
                                       }
                                       type='file'
                                       onChange={async (e) => {
+                                        if (!e.target.files.length) return;
                                         // console.log(e.target.files);
                                         const res = await UploadAttachments(
                                           e.target.files[0]

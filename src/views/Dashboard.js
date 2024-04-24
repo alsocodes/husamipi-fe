@@ -21,9 +21,9 @@ export default function Dashboard() {
               <h1 className='text-white font-semibold text-xl'>
                 Selamat Datang
               </h1>
-              <h1 className='text-white font-semibold text-2xl'>
-                Ali Shodikin
-              </h1>
+              {/* <h1 className='text-white font-semibold text-2xl'>
+                Husam Izzudin Hibatullah
+              </h1> */}
               <h2 className='text-white text-2xl py-2 font-bold'>
                 KMS PT. Best Energy System
               </h2>
